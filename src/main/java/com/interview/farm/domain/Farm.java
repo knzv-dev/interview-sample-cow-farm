@@ -24,6 +24,10 @@ public class Farm {
                 .setId(childCowId)
                 .setNickname(childCowNickName);
 
+        if (list.find(c -> c.getId().equals(childCowId)) != null) {
+            throw new IllegalStateException(String.format("cow with id %s already exists", childCowId));
+        }
+
         list.add(cow);
 
     }
