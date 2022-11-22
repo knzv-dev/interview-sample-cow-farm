@@ -1,20 +1,37 @@
 package com.interview.farm;
 
+import com.interview.farm.domain.CustomStorageFarm;
 import com.interview.farm.domain.Farm;
+import com.interview.farm.domain.StandardLibraryStorageFarm;
 
 class Main {
 
     public static void main(String[] args) {
-        Farm farm = new Farm();
 
-        farm.giveBirth(null, "10", "Dolly");
-        farm.giveBirth(null, "11", "Sally");
-        farm.giveBirth("10", "100", "Marry");
-        farm.giveBirth("11", "101", "Jack");
+        System.out.println("=============cs============");
+        Farm csFarm = new CustomStorageFarm();
 
-        farm.endLifeSpan("100");
+        csFarm.giveBirth(null, "10", "Dolly");
+        csFarm.giveBirth(null, "11", "Sally");
+        csFarm.giveBirth("10", "100", "Marry");
+        csFarm.giveBirth("11", "101", "Jack");
 
-        farm.printFarmData();
+        csFarm.endLifeSpan("100");
+
+        csFarm.printFarmData();
+
+
+        System.out.println("=============sls============");
+        Farm slsFarm = new StandardLibraryStorageFarm();
+
+        slsFarm.giveBirth(null, "10", "Dolly");
+        slsFarm.giveBirth(null, "11", "Sally");
+        slsFarm.giveBirth("10", "100", "Marry");
+        slsFarm.giveBirth("11", "101", "Jack");
+
+        slsFarm.endLifeSpan("100");
+
+        slsFarm.printFarmData();
     }
 }
 
