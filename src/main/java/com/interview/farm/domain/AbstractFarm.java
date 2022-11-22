@@ -68,19 +68,21 @@ public abstract class AbstractFarm implements Farm {
 
     protected abstract Cow findCowById(String cowId);
 
-    private void validateNickname(String childCowNickName) {
-        if (childCowNickName == null || childCowNickName.isEmpty())
-            throw new InvalidParameterException("childCowNickName must not be null or empty");
-    }
-
-    private void validateCowId(String childCowId) {
-        if (childCowId == null || childCowId.isEmpty())
-            throw new InvalidParameterException("cow id must not be null or empty");
-    }
-
     private void validateParentId(String parentCowId) {
         if (parentCowId != null && parentCowId.isEmpty()) {
             throw new InvalidParameterException("parent cow id must not be empty");
+        }
+    }
+
+    private void validateCowId(String childCowId) {
+        if (childCowId == null || childCowId.isEmpty()) {
+            throw new InvalidParameterException("cow id must not be null or empty");
+        }
+    }
+
+    private void validateNickname(String childCowNickName) {
+        if (childCowNickName == null || childCowNickName.isEmpty()) {
+            throw new InvalidParameterException("childCowNickName must not be null or empty");
         }
     }
 }
