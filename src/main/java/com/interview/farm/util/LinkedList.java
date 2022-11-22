@@ -45,14 +45,14 @@ public class LinkedList<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return current.hasNext();
+                return current != null;
             }
 
             @Override
             public T next() {
-                Node<T> node = current.next();
+                T tmp = current.getValue();
                 current = current.next();
-                return node.getValue();
+                return tmp;
             }
         };
     }
