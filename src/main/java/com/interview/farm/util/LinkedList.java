@@ -1,5 +1,7 @@
 package com.interview.farm.util;
 
+import com.interview.farm.domain.Cow;
+
 import java.util.Iterator;
 import java.util.function.Predicate;
 
@@ -37,11 +39,11 @@ public class LinkedList<T> implements Iterable<T> {
         return null;
     }
 
-    public void delete(T cow) {
+    public void delete(T value) {
         Node<T> tmp = head;
         Node<T> prev = null;
         while (tmp != null) {
-            if (tmp.getValue().equals(cow)) {
+            if (tmp.getValue().equals(value)) {
                 if (prev != null) {
                     prev.setNext(tmp.next());
                 } else {
@@ -73,6 +75,10 @@ public class LinkedList<T> implements Iterable<T> {
                 return tmp;
             }
         };
+    }
+
+    public boolean isEmpty() {
+        return head == null || head.getValue() == null;
     }
 
     static class Node<T> {
