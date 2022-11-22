@@ -1,5 +1,7 @@
 package com.interview.farm.domain;
 
+import com.interview.farm.util.HierarchicalCowPrinter;
+
 import java.security.InvalidParameterException;
 
 public abstract class AbstractFarm implements Farm {
@@ -51,11 +53,7 @@ public abstract class AbstractFarm implements Farm {
             System.out.println("No data exists yet");
         }
 
-        System.out.println("id, nickname, children");
-
-        for (Cow cow : storageIterable()) {
-            System.out.println(cow.getId() + ", " + cow.getNickname() + ", [" + String.join(", ", cow.getChildren()) + "]");
-        }
+        HierarchicalCowPrinter.print(storageIterable());
     }
 
     protected abstract Iterable<? extends Cow> storageIterable();
