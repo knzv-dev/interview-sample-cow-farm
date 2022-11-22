@@ -1,7 +1,5 @@
 package com.interview.farm.util;
 
-import com.interview.farm.domain.Cow;
-
 import java.util.Iterator;
 import java.util.function.Predicate;
 
@@ -12,7 +10,7 @@ public class LinkedList<T> implements Iterable<T> {
         head = null;
     }
 
-    public <E extends T> void add(E cow) {
+    public void add(T cow) {
         if (head == null) {
             head = new Node<>(cow);
         } else {
@@ -25,7 +23,7 @@ public class LinkedList<T> implements Iterable<T> {
         }
     }
 
-    public T find(Predicate<T> predicate) {
+    public T find(Predicate<? super T> predicate) {
         Node<T> tmp = head;
         while (tmp != null) {
             T value = tmp.getValue();
