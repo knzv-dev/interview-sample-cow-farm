@@ -19,7 +19,7 @@ public class Farm {
         if (childCowId.equals(parentCowId))
             throw new InvalidParameterException("childCowId must not be equal to parentCowId");
 
-        var cow = new Cow()
+        Cow cow = new Cow()
                 .setParentId(parentCowId)
                 .setId(childCowId)
                 .setNickname(childCowNickName);
@@ -48,7 +48,7 @@ public class Farm {
 
         System.out.println("id, parentId, nickname, isAlive");
 
-        for (var cow : list) {
+        for (Cow cow : list) {
             System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname() + ", " + cow.isAlive());
         }
     }
