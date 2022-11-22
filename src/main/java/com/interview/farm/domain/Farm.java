@@ -8,11 +8,11 @@ public class Farm {
     private LinkedList<Cow> list = new LinkedList<>();
 
     public void giveBirth(String parentCowId, String childCowId, String childCowNickName) {
-        if (parentCowId != null && parentCowId.length() == 0)
+        if (parentCowId != null && parentCowId.isEmpty())
             throw new InvalidParameterException("parentId must not be empty");
-        if (childCowId == null || childCowId.length() == 0)
+        if (childCowId == null || childCowId.isEmpty())
             throw new InvalidParameterException("childCowId must not be null or empty");
-        if (childCowNickName == null || childCowNickName.length() == 0)
+        if (childCowNickName == null || childCowNickName.isEmpty())
             throw new InvalidParameterException("childCowNickName must not be null or empty");
 
 
@@ -29,7 +29,7 @@ public class Farm {
     }
 
     public void endLifeSpan(String cowId) {
-        if (cowId == null || cowId.length() == 0)
+        if (cowId == null || cowId.isEmpty())
             throw new InvalidParameterException("cowId must not be null or empty");
 
         Cow cow = list.find(el -> el.getId().equals(cowId));
