@@ -37,6 +37,24 @@ public class LinkedList<T> implements Iterable<T> {
         return null;
     }
 
+    public void delete(T cow) {
+        Node<T> tmp = head;
+        Node<T> prev = null;
+        while (tmp != null) {
+            if (tmp.getValue().equals(cow)) {
+                if (prev != null) {
+                    prev.setNext(tmp.next());
+                } else {
+                    head = tmp.next();
+                }
+                break;
+            }
+
+            prev = tmp;
+            tmp = tmp.next();
+        }
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
@@ -79,6 +97,10 @@ public class LinkedList<T> implements Iterable<T> {
 
         public Node<T> next() {
             return next;
+        }
+
+        public void setNext(Node<T> next) {
+            this.next = next;
         }
     }
 }

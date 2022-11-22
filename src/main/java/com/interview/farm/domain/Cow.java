@@ -4,7 +4,6 @@ public class Cow {
     private String id;
     private String parentId;
     private String nickname;
-    private boolean isAlive = true;
 
     public String getId() {
         return id;
@@ -30,15 +29,6 @@ public class Cow {
 
     public Cow setNickname(String nickname) {
         this.nickname = nickname;
-        return this;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public Cow setIsAlive(boolean isAlive) {
-        this.isAlive = isAlive;
         return this;
     }
 }

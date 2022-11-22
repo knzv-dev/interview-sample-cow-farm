@@ -41,10 +41,7 @@ public class StandardLibraryStorageFarm implements Farm {
         Cow cow = storage.get(cowId);
 
         if (cow == null) throw new IllegalStateException(String.format("cow with id %s does not exists", cowId));
-        if (!cow.isAlive())
-            throw new IllegalStateException(String.format("lifespan of cow with id %s already ended", cowId));
-
-        cow.setIsAlive(false);
+        storage.remove(cow.getId());
     }
 
     @Override
@@ -56,7 +53,7 @@ public class StandardLibraryStorageFarm implements Farm {
         System.out.println("id, parentId, nickname, isAlive");
 
         for (Cow cow : storage.values()) {
-            System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname() + ", " + cow.isAlive());
+            System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname());
         }
     }
 }

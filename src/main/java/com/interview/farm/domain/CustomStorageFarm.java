@@ -41,10 +41,7 @@ public class CustomStorageFarm implements Farm {
         Cow cow = list.find(el -> el.getId().equals(cowId));
 
         if (cow == null) throw new IllegalStateException(String.format("cow with id %s does not exists", cowId));
-        if (!cow.isAlive())
-            throw new IllegalStateException(String.format("lifespan of cow with id %s already ended", cowId));
-
-        cow.setIsAlive(false);
+        list.delete(cow);
     }
 
     @Override
@@ -53,10 +50,10 @@ public class CustomStorageFarm implements Farm {
             System.out.println("No data exists yet");
         }
 
-        System.out.println("id, parentId, nickname, isAlive");
+        System.out.println("id, parentId, nickname");
 
         for (Cow cow : list) {
-            System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname() + ", " + cow.isAlive());
+            System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname());
         }
     }
 }
