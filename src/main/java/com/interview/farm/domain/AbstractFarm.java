@@ -25,7 +25,6 @@ public abstract class AbstractFarm implements Farm {
                 throw new IllegalStateException(String.format("Parent cow with id %s does not exist", parentCowId));
             }
 
-
             if (parentCow.getChildren().contains(childCowId)) {
                 throw new IllegalStateException(String.format("Cow with id %s already exists", childCowId));
             }
@@ -34,7 +33,6 @@ public abstract class AbstractFarm implements Farm {
         }
 
         saveCow(newBornCow);
-
     }
 
     @Override
