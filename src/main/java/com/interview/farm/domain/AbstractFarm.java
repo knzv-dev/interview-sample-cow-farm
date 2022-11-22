@@ -6,12 +6,9 @@ public abstract class AbstractFarm implements Farm {
 
     @Override
     public void giveBirth(String parentCowId, String childCowId, String childCowNickName) {
-        if (parentCowId != null && parentCowId.isEmpty())
-            throw new InvalidParameterException("parentId must not be empty");
-        if (childCowId == null || childCowId.isEmpty())
-            throw new InvalidParameterException("childCowId must not be null or empty");
-        if (childCowNickName == null || childCowNickName.isEmpty())
-            throw new InvalidParameterException("childCowNickName must not be null or empty");
+        validateParentId(parentCowId);
+        validateCowId(childCowId);
+        validateNickname(childCowNickName);
 
 
         if (childCowId.equals(parentCowId))
@@ -42,8 +39,7 @@ public abstract class AbstractFarm implements Farm {
 
     @Override
     public void endLifeSpan(String cowId) {
-        if (cowId == null || cowId.isEmpty())
-            throw new InvalidParameterException("cowId must not be null or empty");
+        validateCowId(cowId);
 
         Cow cow = findCowById(cowId);
 
@@ -73,4 +69,20 @@ public abstract class AbstractFarm implements Farm {
     protected abstract void saveCow(Cow newBornCow);
 
     protected abstract Cow findCowById(String cowId);
+
+    private void validateNickname(String childCowNickName) {
+        if (childCowNickName == null || childCowNickName.isEmpty())
+            throw new InvalidParameterException("childCowNickName must not be null or empty");
+    }
+
+    private void validateCowId(String childCowId) {
+        if (childCowId == null || childCowId.isEmpty())
+            throw new InvalidParameterException("cow id must not be null or empty");
+    }
+
+    private void validateParentId(String parentCowId) {
+        if (parentCowId != null && parentCowId.isEmpty()) {
+            throw new InvalidParameterException("parent cow id must not be empty");
+        }
+    }
 }
