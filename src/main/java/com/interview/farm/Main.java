@@ -14,7 +14,9 @@ class Main {
         csFarm.giveBirth(null, "10", "Dolly");
         csFarm.giveBirth(null, "11", "Sally");
         csFarm.giveBirth("10", "100", "Marry");
-        csFarm.giveBirth("11", "101", "Jack");
+        csFarm.giveBirth("11", "101", "Nelly");
+        csFarm.giveBirth("11", "102", "Kelly");
+        csFarm.giveBirth("11", "103", "Belly");
 
         csFarm.endLifeSpan("100");
 
@@ -27,7 +29,9 @@ class Main {
         slsFarm.giveBirth(null, "10", "Dolly");
         slsFarm.giveBirth(null, "11", "Sally");
         slsFarm.giveBirth("10", "100", "Marry");
-        slsFarm.giveBirth("11", "101", "Jack");
+        slsFarm.giveBirth("11", "101", "Nelly");
+        slsFarm.giveBirth("11", "102", "Kelly");
+        slsFarm.giveBirth("11", "103", "Belly");
 
         slsFarm.endLifeSpan("100");
 

@@ -5,7 +5,7 @@ import com.interview.farm.util.LinkedList;
 import java.security.InvalidParameterException;
 
 public class CustomStorageFarm implements Farm {
-    private LinkedList<Cow> list = new LinkedList<>();
+    private LinkedList<Cow> storage = new LinkedList<>();
 
     @Override
     public void giveBirth(String parentCowId, String childCowId, String childCowNickName) {
@@ -20,16 +20,25 @@ public class CustomStorageFarm implements Farm {
         if (childCowId.equals(parentCowId))
             throw new InvalidParameterException("childCowId must not be equal to parentCowId");
 
-        Cow cow = new Cow()
-                .setParentId(parentCowId)
+        Cow newBornCow = new Cow()
                 .setId(childCowId)
                 .setNickname(childCowNickName);
 
-        if (list.find(c -> c.getId().equals(childCowId)) != null) {
-            throw new IllegalStateException(String.format("cow with id %s already exists", childCowId));
-        }
+        if (parentCowId != null) {
+            Cow parentCow = storage.find(c -> c.getId().equals(parentCowId));
 
-        list.add(cow);
+            if (parentCow == null) {
+                throw new IllegalStateException(String.format("Parent cow with id %s does not exist", parentCowId));
+            }
+
+
+            if (parentCow.getChildren().contains(childCowId)) {
+                throw new IllegalStateException(String.format("Cow with id %s already exists", childCowId));
+            }
+
+            parentCow.addChild(newBornCow.getId());
+        }
+        storage.add(newBornCow);
 
     }
 
@@ -38,22 +47,22 @@ public class CustomStorageFarm implements Farm {
         if (cowId == null || cowId.isEmpty())
             throw new InvalidParameterException("cowId must not be null or empty");
 
-        Cow cow = list.find(el -> el.getId().equals(cowId));
+        Cow cow = storage.find(el -> el.getId().equals(cowId));
 
         if (cow == null) throw new IllegalStateException(String.format("cow with id %s does not exists", cowId));
-        list.delete(cow);
+        storage.delete(cow);
     }
 
     @Override
     public void printFarmData() {
-        if (list == null) {
+        if (storage == null) {
             System.out.println("No data exists yet");
         }
 
-        System.out.println("id, parentId, nickname");
+        System.out.println("id, nickname, children");
 
-        for (Cow cow : list) {
-            System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname());
+        for (Cow cow : storage) {
+            System.out.println(cow.getId() + ", " + cow.getNickname() + ", [" + String.join(", ", cow.getChildren()) + "]");
         }
     }
 }

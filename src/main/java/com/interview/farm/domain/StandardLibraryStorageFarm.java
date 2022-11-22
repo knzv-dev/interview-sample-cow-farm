@@ -21,16 +21,25 @@ public class StandardLibraryStorageFarm implements Farm {
         if (childCowId.equals(parentCowId))
             throw new InvalidParameterException("childCowId must not be equal to parentCowId");
 
-        Cow cow = new Cow()
-                .setParentId(parentCowId)
+        Cow newBornCow = new Cow()
                 .setId(childCowId)
                 .setNickname(childCowNickName);
 
-        if (storage.containsKey(childCowId)) {
-            throw new IllegalStateException(String.format("cow with id %s already exists", childCowId));
-        }
+        if (parentCowId != null) {
+            Cow parentCow = storage.get(parentCowId);
 
-        storage.put(childCowId, cow);
+            if (parentCow == null) {
+                throw new IllegalStateException(String.format("Parent cow with id %s does not exist", parentCowId));
+            }
+
+
+            if (parentCow.getChildren().contains(childCowId)) {
+                throw new IllegalStateException(String.format("Cow with id %s already exists", childCowId));
+            }
+
+            parentCow.addChild(newBornCow.getId());
+        }
+        storage.put(newBornCow.getId(), newBornCow);
     }
 
     @Override
@@ -50,10 +59,10 @@ public class StandardLibraryStorageFarm implements Farm {
             System.out.println("No data exists yet");
         }
 
-        System.out.println("id, parentId, nickname, isAlive");
+        System.out.println("id, nickname, children");
 
         for (Cow cow : storage.values()) {
-            System.out.println(cow.getId() + ", " + cow.getParentId() + ", " + cow.getNickname());
+            System.out.println(cow.getId() + ", " + cow.getNickname() + ", [" + String.join(", ", cow.getChildren()) + "]");
         }
     }
 }

@@ -1,8 +1,12 @@
 package com.interview.farm.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Cow {
     private String id;
-    private String parentId;
+    private List<String> children;
     private String nickname;
 
     public String getId() {
@@ -14,13 +18,17 @@ public class Cow {
         return this;
     }
 
-    public String getParentId() {
-        return parentId;
+    public Cow addChild(String cowId) {
+        if (children == null) {
+            children = new ArrayList<>();
+        }
+        children.add(cowId);
+        return this;
     }
 
-    public Cow setParentId(String parentId) {
-        this.parentId = parentId;
-        return this;
+    public List<String> getChildren() {
+        if (children == null) return Collections.emptyList();
+        return new ArrayList<>(children);
     }
 
     public String getNickname() {
