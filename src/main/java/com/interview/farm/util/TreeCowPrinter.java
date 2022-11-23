@@ -79,6 +79,7 @@ public class TreeCowPrinter implements Printer<Iterable<Cow>> {
                 List<TreeNode> leaves = new ArrayList<>();
                 collectLeaves(root, leaves);
 
+                // if one of the leaf is a new root, just append current children
                 for (var leaf : leaves) {
                     if (node.value.equals(leaf.value)) {
                         leaf.children = node.children;
@@ -86,19 +87,28 @@ public class TreeCowPrinter implements Printer<Iterable<Cow>> {
                     }
                 }
 
+                // if one or more children are roots, remove roots and add them as childs to keep hierarchy
                 List<TreeNode> level2 = root.children;
-                for (String childId : entry.getValue()) {
-                    for (TreeNode n : level2) {
-                        if (n.value.equals(childId)) {
-                            level2.remove(n);
-                            node.children.removeIf(treeNode -> treeNode.value.equals(n.value));
-                            node.children.add(n);
-                            level2.add(node);
-                            continue outer;
+                List<TreeNode> newChildren = new ArrayList<>();
+                Iterator<TreeNode> currentTreeIterator = level2.iterator();
+                while (currentTreeIterator.hasNext()) {
+                    TreeNode parentNode = currentTreeIterator.next();
+                    Iterator<TreeNode> newNodeChildrenIterator = node.children.iterator();
+                    while (newNodeChildrenIterator.hasNext()) {
+                        TreeNode newNodeChild = newNodeChildrenIterator.next();
+                        if (newNodeChild.value.equals(parentNode.value)) {
+                            newChildren.add(parentNode);
+                            newNodeChildrenIterator.remove();
+                            currentTreeIterator.remove();
                         }
                     }
+
                 }
 
+
+                if (!newChildren.isEmpty()) {
+                    node.children = newChildren;
+                }
                 root.children.add(node);
             }
         }

@@ -17,6 +17,8 @@ class Main {
         csFarm.giveBirth("11", "101", "Nelly");
         csFarm.giveBirth("11", "102", "Kelly");
         csFarm.giveBirth("11", "103", "Belly");
+        csFarm.giveBirth("101", "1001", "Jelly");
+        csFarm.giveBirth("101", "1002", "Really?");
 
         csFarm.endLifeSpan("100");
 
@@ -32,6 +34,8 @@ class Main {
         slsFarm.giveBirth("11", "101", "Nelly");
         slsFarm.giveBirth("11", "102", "Kelly");
         slsFarm.giveBirth("11", "103", "Belly");
+        slsFarm.giveBirth("101", "1001", "Jelly");
+        slsFarm.giveBirth("101", "1002", "Really?");
 
         slsFarm.endLifeSpan("100");
 
