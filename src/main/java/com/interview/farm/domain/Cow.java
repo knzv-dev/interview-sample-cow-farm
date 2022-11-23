@@ -3,6 +3,7 @@ package com.interview.farm.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Cow {
     private String id;
@@ -26,6 +27,12 @@ public class Cow {
         return this;
     }
 
+    public void removeChild(String cowId) {
+        if (children != null) {
+            children.remove(cowId);
+        }
+    }
+
     public List<String> getChildren() {
         if (children == null) return Collections.emptyList();
         return new ArrayList<>(children);
@@ -38,5 +45,18 @@ public class Cow {
     public Cow setNickname(String nickname) {
         this.nickname = nickname;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cow cow = (Cow) o;
+        return Objects.equals(id, cow.id) && Objects.equals(children, cow.children) && Objects.equals(nickname, cow.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, children, nickname);
     }
 }

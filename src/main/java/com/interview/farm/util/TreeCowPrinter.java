@@ -7,16 +7,18 @@ import java.io.Writer;
 import java.util.*;
 import java.util.function.Function;
 
-public class TreeCowPrinter {
+public class TreeCowPrinter implements Printer<Iterable<Cow>> {
 
+    private static final String ROOT_NODE_NAME = "farm";
     private final Writer outputStream;
 
     public TreeCowPrinter(Writer out) {
         outputStream = out;
     }
 
-    public void print(Iterable<? extends Cow> cowIterable) throws IOException {
-        TreeNode tree = new TreeNode("farm", new ArrayList<>());
+    @Override
+    public void print(Iterable<Cow> cowIterable) throws IOException {
+        TreeNode tree = new TreeNode(ROOT_NODE_NAME, new ArrayList<>());
 
         Map<String, String> cowNames = collectCowNames(cowIterable);
 
@@ -33,6 +35,12 @@ public class TreeCowPrinter {
         TreeUtils.buildTree(tree, relations);
 
         outputStream.write(tree.toString());
+        outputStream.flush();
+    }
+
+    @Override
+    public void print(String text) throws IOException {
+        outputStream.write(text);
         outputStream.flush();
     }
 

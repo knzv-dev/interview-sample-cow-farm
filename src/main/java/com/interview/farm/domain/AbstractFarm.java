@@ -1,14 +1,11 @@
 package com.interview.farm.domain;
 
-import com.interview.farm.util.TreeCowPrinter;
+import com.interview.farm.util.Printer;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.security.InvalidParameterException;
 
 public abstract class AbstractFarm implements Farm {
-
-    private static final TreeCowPrinter STD_COW_PRINTER = new TreeCowPrinter(new OutputStreamWriter(System.out));
 
     @Override
     public void giveBirth(String parentCowId, String childCowId, String childCowNickName) {
@@ -49,22 +46,29 @@ public abstract class AbstractFarm implements Farm {
 
         if (cow == null) throw new IllegalStateException(String.format("cow with id %s does not exists", cowId));
         deleteCow(cow);
+        Cow parent = findParentByChildId(cowId);
+
+        if(parent != null) {
+            parent.removeChild(cowId);
+        }
     }
 
     @Override
     public void printFarmData() {
-        if (isStorageEmpty()) {
-            System.out.println("No data exists yet");
-        }
-
         try {
-            STD_COW_PRINTER.print(storageIterable());
+            if (isStorageEmpty()) {
+                getPrinter().print("No data");
+            }
+            getPrinter().print(storageIterable());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
-    protected abstract Iterable<? extends Cow> storageIterable();
+    protected abstract Printer<Iterable<Cow>> getPrinter();
+
+    protected abstract Iterable<Cow> storageIterable();
 
     protected abstract boolean isStorageEmpty();
 
@@ -74,20 +78,22 @@ public abstract class AbstractFarm implements Farm {
 
     protected abstract Cow findCowById(String cowId);
 
+    protected abstract Cow findParentByChildId(String cowId);
+
     private void validateParentId(String parentCowId) {
-        if (parentCowId != null && parentCowId.isEmpty()) {
+        if (parentCowId != null && parentCowId.isBlank()) {
             throw new InvalidParameterException("parent cow id must not be empty");
         }
     }
 
     private void validateCowId(String childCowId) {
-        if (childCowId == null || childCowId.isEmpty()) {
+        if (childCowId == null || childCowId.isBlank()) {
             throw new InvalidParameterException("cow id must not be null or empty");
         }
     }
 
     private void validateNickname(String childCowNickName) {
-        if (childCowNickName == null || childCowNickName.isEmpty()) {
+        if (childCowNickName == null || childCowNickName.isBlank()) {
             throw new InvalidParameterException("childCowNickName must not be null or empty");
         }
     }

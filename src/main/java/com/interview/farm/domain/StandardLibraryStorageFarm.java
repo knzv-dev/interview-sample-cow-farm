@@ -1,5 +1,9 @@
 package com.interview.farm.domain;
 
+import com.interview.farm.util.Printer;
+import com.interview.farm.util.TreeCowPrinter;
+
+import java.io.OutputStreamWriter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -8,7 +12,12 @@ public class StandardLibraryStorageFarm extends AbstractFarm {
     private Map<String, Cow> storage = new ConcurrentHashMap<>();
 
     @Override
-    protected Iterable<? extends Cow> storageIterable() {
+    protected Printer<Iterable<Cow>> getPrinter() {
+        return new TreeCowPrinter(new OutputStreamWriter(System.out));
+    }
+
+    @Override
+    protected Iterable<Cow> storageIterable() {
         return storage.values();
     }
 
@@ -30,5 +39,15 @@ public class StandardLibraryStorageFarm extends AbstractFarm {
     @Override
     protected Cow findCowById(String cowId) {
         return storage.get(cowId);
+    }
+
+    @Override
+    protected Cow findParentByChildId(String cowId) {
+        for (Cow cow : storage.values()) {
+            if (cow.getChildren().contains(cowId)) {
+                return cow;
+            }
+        }
+        return null;
     }
 }
