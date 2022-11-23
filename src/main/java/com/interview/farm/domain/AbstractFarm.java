@@ -2,9 +2,13 @@ package com.interview.farm.domain;
 
 import com.interview.farm.util.TreeCowPrinter;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.security.InvalidParameterException;
 
 public abstract class AbstractFarm implements Farm {
+
+    private static final TreeCowPrinter STD_COW_PRINTER = new TreeCowPrinter(new OutputStreamWriter(System.out));
 
     @Override
     public void giveBirth(String parentCowId, String childCowId, String childCowNickName) {
@@ -53,7 +57,11 @@ public abstract class AbstractFarm implements Farm {
             System.out.println("No data exists yet");
         }
 
-        TreeCowPrinter.print(storageIterable());
+        try {
+            STD_COW_PRINTER.print(storageIterable());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected abstract Iterable<? extends Cow> storageIterable();

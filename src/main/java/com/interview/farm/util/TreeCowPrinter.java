@@ -2,17 +2,26 @@ package com.interview.farm.util;
 
 import com.interview.farm.domain.Cow;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 import java.util.function.Function;
 
 public class TreeCowPrinter {
 
-    public static void print(Iterable<? extends Cow> cowIterable) {
+    private final Writer outputStream;
+
+    public TreeCowPrinter(Writer out) {
+        outputStream = out;
+    }
+
+    public void print(Iterable<? extends Cow> cowIterable) throws IOException {
         TreeNode tree = new TreeNode("farm", new ArrayList<>());
 
         Map<String, String> cowNames = collectCowNames(cowIterable);
 
-        Map<String, List<String>> relations = new HashMap<>();
+        Map<String, List<String>> relations = new TreeMap<>();
+
         cowIterable.forEach(cow -> {
             var children = new ArrayList<String>();
             cow.getChildren().forEach(childId -> {
@@ -21,10 +30,10 @@ public class TreeCowPrinter {
             relations.put(cow.getId() + " " + cow.getNickname(), children);
         });
 
-
         TreeUtils.buildTree(tree, relations);
 
-        System.out.println(tree);
+        outputStream.write(tree.toString());
+        outputStream.flush();
     }
 
     private static Map<String, String> collectCowNames(Iterable<? extends Cow> cowIterable) {
