@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractFarmTest {
 
@@ -140,6 +139,23 @@ class AbstractFarmTest {
         farm.endLifeSpan("1");
 
         assertEquals(1, parent.getChildren().size());
+    }
+
+    @Test
+    public void endLifeSpan_should_rebase_children_to_nearest_grandparent() {
+        Cow child3 = new Cow().setId("3");
+        Cow child2 = new Cow().setId("2");
+        Cow parent = new Cow().setId("1").addChild("2").addChild("3");
+        Cow grandparent = new Cow().setId("0").addChild("1");
+
+        Mockito.when(farm.findCowById("1")).thenReturn(parent);
+        Mockito.when(farm.findParentByChildId("1")).thenReturn(grandparent);
+
+        farm.endLifeSpan("1");
+
+        assertEquals(2, parent.getChildren().size());
+        assertTrue(grandparent.getChildren().contains(child2.getId()));
+        assertTrue(grandparent.getChildren().contains(child3.getId()));
     }
 
     @Test

@@ -50,6 +50,9 @@ public abstract class AbstractFarm implements Farm {
 
         if(parent != null) {
             parent.removeChild(cowId);
+            for (String childCowId : cow.getChildren()) {
+                parent.addChild(childCowId);
+            }
         }
     }
 
