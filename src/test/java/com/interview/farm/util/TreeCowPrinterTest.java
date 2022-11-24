@@ -19,7 +19,7 @@ public class TreeCowPrinterTest {
 
         printer.print(Collections.emptyList());
 
-        assertEquals("farm\n", writer.toString());
+        assertEquals("Farm\n", writer.toString());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class TreeCowPrinterTest {
         printer.print(data);
 
         var expected =
-                "farm\n" +
+                "Farm\n" +
                         "├── 1 Cow 1\n" +
                         "└── 2 Cow 2\n";
 
@@ -58,15 +58,13 @@ public class TreeCowPrinterTest {
         printer.print(data);
 
         var expected =
-                "farm\n" +
+                "Farm\n" +
                         "├── 1 Parent 1\n" +
                         "│   └── 10 Child of 1\n" +
                         "└── 2 Parent 2\n" +
                         "    ├── 20 Child of 2\n" +
                         "    └── 21 Child of 2\n";
 
-        System.out.println(expected);
-        System.out.println(writer);
 
         assertEquals(expected, writer.toString());
     }

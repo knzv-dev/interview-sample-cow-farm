@@ -1,7 +1,7 @@
 package com.interview.farm.util;
 
 import com.interview.farm.domain.Cow;
-import com.interview.farm.util.tree.PrintableTreeNode;
+import com.interview.farm.util.tree.TreeNode;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -18,7 +18,6 @@ public class TreeCowPrinter implements Printer<Iterable<Cow>> {
     @Override
     public void print(Iterable<Cow> cowIterable) throws IOException {
         Map<String, String> cowNames = collectCowNames(cowIterable);
-
         Map<String, List<String>> relations = new TreeMap<>();
 
         cowIterable.forEach(cow -> {
@@ -29,7 +28,7 @@ public class TreeCowPrinter implements Printer<Iterable<Cow>> {
             relations.put(cow.getId() + " " + cow.getNickname(), children);
         });
 
-        PrintableTreeNode<String> treeNode = PrintableTreeNode.buildTreeFromMultipleRoots(relations, "farm");
+        TreeNode<String> treeNode = TreeNode.buildTreeFromMultipleRoots(relations, "Farm");
 
         outputStream.write(treeNode.toString());
         outputStream.flush();
